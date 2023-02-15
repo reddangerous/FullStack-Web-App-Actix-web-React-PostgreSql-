@@ -60,7 +60,18 @@ pub async fn get_users(state:Data<AppState>,) -> impl Responder {
         Err(_) => HttpResponse::NotFound().json("users not found"),
     }
 }
-
+//getting users by email address
+#[get("/users/{email}")]
+pub async fn get_user(state:Data<AppState>, email:Path<String>) -> impl Responder {
+    match sqlx::query_as::<_, User>("SELECT * FROM users WHERE email=$1")
+    .bind(email.into_inner())
+        .fetch_one(&state.db)
+        .await
+    {
+        Ok(user) => HttpResponse::Ok().json(user),
+        Err(_) => HttpResponse::NotFound().json("user not found"),
+    }
+}
 #[put("/users/{id}")]
 pub async fn update_user(state:Data<AppState>, body:Json<UpdateUser>, id:Path<i32>) -> impl Responder {
     match sqlx::query("UPDATE users SET name=$1, email=$2, password=$3, WHERE id=$4")

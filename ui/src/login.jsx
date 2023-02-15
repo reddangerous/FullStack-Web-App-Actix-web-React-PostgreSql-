@@ -17,19 +17,27 @@ async function createAccount({ name, email, password }) {
 }
 async function signIn({ email }) {
     try {
-        const url = "http://localhost:8080/users/{}" + email;
-        let result = await fetch(url);
+        const url = "http://localhost:8080/users/" +email;
+        let result = await fetch(url, {
+            method: "GET",
+            headers:{
+                "Content-Type": "application/json"
+            }
+           
+        });
         return result.json();
+        
     } catch (e) {
         return Promise.reject(e);
     }
+   
 }
-export default function Login({ show, setAuth }) {
+export default function Login({ show }) {
     const [isShowSigIn, setShowSignIn] = useState(false);
     const showSignIn = () => {
         setShowSignIn(prev => !prev)
     }
-    const FormCreateUsername = ({ setAuth }) => {
+    const FormCreateUsername = () => {
         const onCreateUsername = async (e) => {
             e.preventDefault();
             let email = e.target.email.value;
@@ -43,7 +51,9 @@ export default function Login({ show, setAuth }) {
                 alert("Failed to create account");
                 return;
             }
-            setAuth(res)
+            alert("Account created successfully")
+            return;
+            
         }
         return (
             <form action="" className="login" onSubmit={onCreateUsername}>
@@ -67,23 +77,26 @@ export default function Login({ show, setAuth }) {
             </form>
         )
     }
-    const FormSignIn = ({ setAuth }) => {
+    const FormSignIn = () => {
         const onSignIn = async (e) => {
             e.preventDefault();
             let email = e.target.email.value;
-            if (email === "") {
+            let password = e.target.password.value;
+            //let password = e.target.password;
+            if (email === "" && password === "") {
                 return;
             }
-            let res = await signIn({ email });
+            let res = await signIn({ email,password });
             if (res === null) {
                 alert("Failed to create account");
                 return;
             }
-            if (!res.id) {
-                alert(`email address not found ${email}`);
+            if (password !==res.password && !email!== res.email) {
+                alert("Login failed check credentials");
                 return;
-            }
-            setAuth(res)
+           }
+           console.log(res)
+            alert("Login Succesful")
         }
         return (
             <form action="" onSubmit={onSignIn}>
@@ -110,7 +123,7 @@ export default function Login({ show, setAuth }) {
             <div >
                 <div>
                     <h3 >{isShowSigIn ? 'Log in with your phone.' : 'Create your account.'}</h3>
-                    {isShowSigIn ? <FormSignIn setAuth={setAuth} /> : <FormCreateUsername setAuth={setAuth} />}
+                    {isShowSigIn ? <FormSignIn /> : <FormCreateUsername  />}
                 </div>
             </div>
         </div>

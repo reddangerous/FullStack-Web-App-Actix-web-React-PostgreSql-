@@ -3,7 +3,7 @@ use dotenv::dotenv;
 use actix_cors::Cors;
 use sqlx::{postgres::PgPoolOptions, PgPool};
 mod services;
-use services::{create_user, get_users,update_user, delete_user};
+use services::{create_user, get_users,update_user, delete_user,get_user};
 use actix_files::Files;
 pub struct AppState {
     pub db: PgPool,
@@ -35,6 +35,7 @@ async fn main() -> std::io::Result<()> {
             .service(get_users)
             .service(update_user)
             .service(delete_user)
+            .service(get_user)
             .service(Files::new("/", "./static"))
     })
     .bind(("127.0.0.1",8080))?
