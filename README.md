@@ -19,13 +19,9 @@ Once you have these components installed and configured, you can run the project
 This project provides a basic set of features for user signup and login:
 
 - User signup with username, email, and password
-- User login with username and password
-- Password hashing with bcrypt
-- Session management with JWT
+- User login with Email and password
 
-## Documentation
 
-The project code is commented and includes detailed documentation. For more information about the features and how to use them, please refer to the GitHub repository.
 
 ## Contributing
 
