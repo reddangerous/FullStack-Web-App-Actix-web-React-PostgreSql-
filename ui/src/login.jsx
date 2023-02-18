@@ -122,7 +122,7 @@ export default function Login({ show }) {
         <div className={`${show ? '' : 'hidden'} bg-gradient-to-b from-orange-400 to-rose-400`}>
             <div >
                 <div>
-                    <h3 >{isShowSigIn ? 'Log in with your phone.' : 'Create your account.'}</h3>
+                    <h3 >{isShowSigIn ? 'Log in with your email.' : 'Create your account.'}</h3>
                     {isShowSigIn ? <FormSignIn /> : <FormCreateUsername  />}
                 </div>
             </div>
