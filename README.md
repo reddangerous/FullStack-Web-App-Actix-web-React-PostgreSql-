@@ -1,4 +1,4 @@
-
+## Full Stack Web App with Actix Web, React, and PostgreSQL
 This project is a full-stack application that provides a user signup and login feature using Actix Web as the backend, connected to a PostgreSQL database, and a React frontend.
 
 ## Getting Started
